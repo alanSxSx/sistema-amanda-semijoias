@@ -4,6 +4,7 @@ import "./globals.css";
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import { PrimeReactProvider } from 'primereact/api';
+import { Header } from './components/Header';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,10 @@ export default function RootLayout({
   return (
 		<PrimeReactProvider>
     <html lang="pt-br">
-      <body className={`${inter.className} w-min-screen bg-[#1F0B0B]`}>{children}</body>
+      <body className={`${inter.className} bg-[#1F0B0B]`}>
+				<Header/>
+				{children}
+			</body>
     </html>
 		</PrimeReactProvider>
   );
