@@ -38,14 +38,14 @@ export function Doughnut({ name,title }: ChartSubtitle) {
     }, []);
 
     return (
-        <div className="card flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center min-w-1/4">
 					<h1 className='font-semibold text-2xl text-red-200'>{title}</h1>
             <Chart
                 type="pie"
                 data={chartData}
                 options={chartOptions}
                 pt={{
-                    root: { className: 'w-full md:w-30rem' }
+                    root: { className: 'w-full' }
                 }}
             />
         </div>
