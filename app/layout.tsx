@@ -21,8 +21,9 @@ export default function RootLayout({
   return (
 		<PrimeReactProvider>
     <html lang="pt-br">
+      
       <body className={`${inter.className} bg-[#1F0B0B]`}>
-				<Header/>
+        <Header />
 				{children}
 			</body>
     </html>
