@@ -1,57 +1,76 @@
-import Link from "next/link";
-import React from "react";
+"use client";
+import { Menubar } from "primereact/menubar";
+import { MenuItem } from "primereact/menuitem";
+import "./index.css";
 
 export function Header() {
+  const items: MenuItem[] = [
+    {
+      label: "Home",
+      icon: "pi pi-home",
+      url: "/",
+    },
+    {
+      label: "Produtos",
+      icon: "pi pi-star",
+    },
+    {
+      label: "Clientes",
+      icon: "pi pi-search",
+      items: [
+        {
+          label: "Components",
+          icon: "pi pi-bolt",
+        },
+        {
+          label: "Blocks",
+          icon: "pi pi-server",
+        },
+        {
+          label: "UI Kit",
+          icon: "pi pi-pencil",
+        },
+        {
+          label: "Revendedor",
+          icon: "pi pi-palette",
+          items: [
+            {
+              label: "Apollo",
+              icon: "pi pi-palette",
+            },
+            {
+              label: "Ultima",
+              icon: "pi pi-palette",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      label: "Revendedor",
+      icon: "pi pi-envelope",
+    },
+    {
+      label: "Vendas",
+      icon: "pi pi-envelope",
+    },
+    {
+      label: "Estoque",
+      icon: "pi pi-envelope",
+    },
+    {
+      label: "Montagem",
+      icon: "pi pi-envelope",
+    },
+    {
+      label: "Acerto",
+      icon: "pi pi-envelope",
+    },
+  ];
+
   return (
-    <div className=" bg-red-900 h-20 flex overflow-hidden items-center justify-center gap-16 w-full min-w-screen">
-      <Link
-        href="/home"
-        className=" text-white font-semibold hover:text-rose-300"
-      >
-        HOME
-      </Link>
-      <Link
-        href="/products"
-        className=" text-white font-semibold hover:text-rose-300"
-      >
-        PRODUTOS
-      </Link>
-      <Link
-        href="/clientes"
-        className=" text-white font-semibold hover:text-rose-300"
-      >
-        CLIENTES
-      </Link>
-      <Link
-        href="/revendedor"
-        className=" text-white font-semibold hover:text-rose-300"
-      >
-        REVENDEDOR
-      </Link>
-      <Link
-        href="/vendas"
-        className=" text-white font-semibold hover:text-rose-300"
-      >
-        VENDAS
-      </Link>
-      <Link
-        href="/estoque"
-        className=" text-white font-semibold hover:text-rose-300"
-      >
-        ESTOQUE
-      </Link>
-      <Link
-        href="/montagem"
-        className=" text-white font-semibold hover:text-rose-300"
-      >
-        MONTAGEM KIT
-      </Link>
-      <Link
-        href="/acerto"
-        className=" text-white font-semibold hover:text-rose-300"
-      >
-        ACERTO
-      </Link>
+    <div className="card">
+      <Menubar model={items} className="bg-red-900 rounded-none text-white" />
     </div>
   );
 }

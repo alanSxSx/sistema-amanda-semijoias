@@ -4,7 +4,7 @@ import logo from '../../src/img/Amanda-removebg-preview.png'
 
 export function Brands() {
 	return (
-		<div className='flex justify-center items-center'>
+		<div className='flex pt-10 justify-center items-center'>
 		<Image src={logo} width={500} height={500} alt='logo'/>
 		</div>
 	)

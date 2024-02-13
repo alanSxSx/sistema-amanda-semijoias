@@ -7,7 +7,7 @@ export default function Home() {
     <>
       <main className="">
         <Brands />
-        <Dashboard />
+        {/* <Dashboard /> */}
       </main>
     </>
   );
