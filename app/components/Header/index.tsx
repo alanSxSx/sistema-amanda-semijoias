@@ -12,11 +12,12 @@ export function Header() {
     },
     {
       label: "Produtos",
-      icon: "pi pi-star",
+      icon: "pi pi-wrench",
+      url: "/products"
     },
     {
       label: "Clientes",
-      icon: "pi pi-search",
+      icon: "pi pi-user",
       items: [
         {
           label: "Components",
@@ -47,30 +48,30 @@ export function Header() {
       ],
     },
     {
-      label: "Revendedor",
-      icon: "pi pi-envelope",
+      label: "Revendedores",
+      icon: "pi pi-users",
     },
     {
       label: "Vendas",
-      icon: "pi pi-envelope",
+      icon: "pi pi-money-bill",
     },
     {
       label: "Estoque",
-      icon: "pi pi-envelope",
+      icon: "pi pi-table",
     },
     {
-      label: "Montagem",
-      icon: "pi pi-envelope",
+      label: "Montagem de Kit",
+      icon: "pi pi-cart-plus",
     },
     {
       label: "Acerto",
-      icon: "pi pi-envelope",
+      icon: "pi pi-check-circle",
     },
   ];
 
   return (
     <div className="card">
-      <Menubar model={items} className="bg-red-900 rounded-none text-white" />
+      <Menubar model={items} className="bg-red-900 rounded-none text-white p-3" aria-label="true" />
     </div>
   );
 }
