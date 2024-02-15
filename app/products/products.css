@@ -1,0 +1,14 @@
+div .p-datatable,.p-datatable-scrollable,.p-datatable-header,.p-datatable-footer,.p-datatable-wrapper,.p-datatable-table,.p-datatable-thead,.p-datatable-tbody,.p-datatable-tfoot {
+    background-color: #1F0B0B;
+    color:white;
+}
+
+div th,td {
+   
+}
+
+div .p-toolbar,.p-component{
+    margin: 0;
+    margin-bottom: 0;
+}
+

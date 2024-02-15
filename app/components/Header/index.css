@@ -2,67 +2,62 @@
   background: var(--surface-card);
   margin-bottom: 1rem;
   /* color: aliceblue !important; */
-  
 }
 
-div .p-menuitem-text,.p-menuitem-icon,.p-menu-list,.p-menuitem,.p-submenu-icon {
-    color: white !important;
-  
+div .p-menuitem-text,
+.p-menuitem-icon,
+.p-menu-list,
+.p-menuitem,
+.p-submenu-icon {
+  color: white !important;
 }
 
-div .p-menuitem-text:hover,.p-menuitem-icon:hover,.p-menu-list:hover,.p-menuitem:hover,.p-submenu-icon:hover,.card:hover {
-    /* background-color: #661814; */
-    color: white !important;
- 
-    
+div .p-menuitem-text:hover,
+.p-menuitem-icon:hover,
+.p-menu-list:hover,
+.p-menuitem:hover,
+.p-submenu-icon:hover,
+.card:hover {
+  color: white !important;
 }
 
 div .p-submenu-icon {
-    /* background-color: #661814; */
-    
+  /* background-color: #661814; */
 }
 div .p-submenu-icon:hover {
-    /* background-color: #e7443c; */
-    color: black;
-    
+  /* background-color: #e7443c; */
+  color: black;
 }
 
 div .p-menuitem-link:hover {
-    background-color: #8c221c;
- 
-    
+  background-color: #8c221c;
 }
 
 div a {
-    background-color: #661814;
-  
-   
+  background-color: #661814;
 }
 
 div a:hover {
-    color: white;
- 
-    
+  color: white;
 }
 
 div ul {
-    background-color: #661814;
-  
+  background-color: #661814;
 }
 
 div ul:hover {
-    color: black;
- 
+  color: black;
 }
 
 div .p-menubar-button {
-    color: white;
- 
+  color: white;
+  border:none;
 }
-
 
 div .p-menubar .p-menubar-button:hover {
-    box-shadow: none;
-   
+  box-shadow: none;
 }
 
+div .p-menubar {
+  border: 0;
+}
