@@ -201,7 +201,20 @@ export default function Products() {
     setProduct(_product);
   };
 
-  const onInputNumberChange = (e: InputNumberChangeEvent, name: string) => {
+	const onInputTextAreaChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+    name: string
+  ) => {
+    const val = (e.target && e.target.value) || "";
+    let _product = { ...product };
+
+    // @ts-ignore
+    _product[`${name}`] = val;
+
+    setProduct(_product);
+  };
+
+  const onInputNumberChange = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     const val = e.value || 0;
     let _product = { ...product };
 
@@ -390,8 +403,8 @@ export default function Products() {
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
           globalFilter={globalFilter}
           header={header}
-          
-        
+
+
 
         >
           <Column selectionMode="multiple" exportable={false} ></Column>
@@ -425,7 +438,7 @@ export default function Products() {
             sortable
             style={{ minWidth: "10rem" }}
           ></Column>
-          
+
           <Column
             body={actionBodyTemplate}
             exportable={false}
@@ -458,7 +471,7 @@ export default function Products() {
           <InputText
             id="name"
             value={product.name}
-            onChange={(e) => onInputChange(e, "name")}
+            onChange={(e:ChangeEvent<HTMLInputElement>) => onInputChange(e, "name")}
             required
             autoFocus
             className={classNames({ "p-invalid": submitted && !product.name })}
@@ -474,7 +487,7 @@ export default function Products() {
           <InputTextarea
             id="description"
             value={product.description}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => onInputChange(e, "description")}
+            onChange={(e:ChangeEvent<HTMLTextAreaElement>) => onInputTextAreaChange(e, "description")}
             required
             rows={3}
             cols={20}
@@ -535,7 +548,7 @@ export default function Products() {
             <InputNumber
               id="price"
               value={product.price}
-              onValueChange={(e) => onInputNumberChange(e, "price")}
+              onValueChange={(e:ChangeEvent<HTMLInputElement>) => onInputNumberChange(e, "price")}
               mode="currency"
               currency="USD"
               locale="en-US"
