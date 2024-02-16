@@ -3,12 +3,20 @@ div .p-datatable,.p-datatable-scrollable,.p-datatable-header,.p-datatable-footer
     color:white;
 }
 
-div th,td {
-   
-}
 
 div .p-toolbar,.p-component{
     margin: 0;
     margin-bottom: 0;
+}
+
+div .p-dialog-footer {
+    display:flex;
+    align-items:center ;
+    justify-content: space-evenly;
+    padding:1em;
+}
+
+div .p-dialog-footer button {
+    width: 125px;
 }
 

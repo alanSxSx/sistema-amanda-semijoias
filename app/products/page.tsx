@@ -11,7 +11,7 @@ import { Rating } from "primereact/rating";
 import { Toolbar } from "primereact/toolbar";
 import { InputTextarea } from "primereact/inputtextarea";
 import { RadioButton, RadioButtonChangeEvent } from "primereact/radiobutton";
-import { InputNumber, InputNumberChangeEvent } from "primereact/inputnumber";
+import { InputNumber, InputNumberChangeEvent, InputNumberValueChangeEvent } from "primereact/inputnumber";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Tag } from "primereact/tag";
@@ -214,8 +214,8 @@ export default function Products() {
     setProduct(_product);
   };
 
-  const onInputNumberChange = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
-    const val = e.value || 0;
+  const onInputNumberChange = (e: InputNumberValueChangeEvent, name: string) => {
+    const val = e.target.value ?? 0;
     let _product = { ...product };
 
     // @ts-ignore
@@ -337,10 +337,10 @@ export default function Products() {
     </div>
   );
   const productDialogFooter = (
-    <React.Fragment>
+    <>
       <Button label="Cancel" icon="pi pi-times" outlined onClick={hideDialog} />
       <Button label="Save" icon="pi pi-check" onClick={saveProduct} />
-    </React.Fragment>
+    </>
   );
   const deleteProductDialogFooter = (
     <React.Fragment>
@@ -548,7 +548,7 @@ export default function Products() {
             <InputNumber
               id="price"
               value={product.price}
-              onValueChange={(e:ChangeEvent<HTMLInputElement>) => onInputNumberChange(e, "price")}
+              onValueChange={(e:InputNumberValueChangeEvent) => onInputNumberChange(e, "price")}
               mode="currency"
               currency="USD"
               locale="en-US"
@@ -561,7 +561,7 @@ export default function Products() {
             <InputNumber
               id="quantity"
               value={product.quantity}
-              onValueChange={(e) => onInputNumberChange(e, "quantity")}
+              onValueChange={(e) => onInputNumberChange(e,"quantity")}
             />
           </div>
         </div>
