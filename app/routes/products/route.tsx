@@ -1,11 +1,9 @@
 import React from 'react'
 
-export default async function RouteProducts() {
+export async function GET() {
 
-    fetch
+    const response = await fetch('http://localhost:8080/products')
+    const data = await response.json();
 
-  return (
-    <>
-    </>
-  )
+  return Response.json({data})
 }
