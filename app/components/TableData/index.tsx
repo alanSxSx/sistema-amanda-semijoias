@@ -9,13 +9,18 @@ import { Rating } from "primereact/rating";
 import { Toolbar } from "primereact/toolbar";
 import { InputTextarea } from "primereact/inputtextarea";
 import { RadioButton, RadioButtonChangeEvent } from "primereact/radiobutton";
-import { InputNumber, InputNumberChangeEvent, InputNumberValueChangeEvent } from "primereact/inputnumber";
+import { InputNumber, InputNumberValueChangeEvent } from "primereact/inputnumber";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Tag } from "primereact/tag";
 import './products.css'
 
-export default function Products() {
+interface DataProducts {
+    productsData: Product[];
+  }
+
+  export default function Products({ productsData }: DataProducts) {
+
   let emptyProduct: Product = {
     id: null,
     code: "",
@@ -24,31 +29,34 @@ export default function Products() {
     description: "",
     category: null,
     price: 0,
+    priceforsale: 0,
     quantity: 0,
     rating: 0,
     inventoryStatus: "INSTOCK",
   };
 
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>(productsData);
   const [productDialog, setProductDialog] = useState<boolean>(false);
-  const [deleteProductDialog, setDeleteProductDialog] =
-    useState<boolean>(false);
-  const [deleteProductsDialog, setDeleteProductsDialog] =
-    useState<boolean>(false);
+  const [deleteProductDialog, setDeleteProductDialog] = useState<boolean>(false);
+  const [deleteProductsDialog, setDeleteProductsDialog] = useState<boolean>(false);
   const [product, setProduct] = useState<Product>(emptyProduct);
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
   const [submitted, setSubmitted] = useState<boolean>(false);
-  const [globalFilter, setGlobalFilter] = useState<string>("");
+  const [globalFilter, setGlobalFilter] = useState<string>('');
   const toast = useRef<Toast>(null);
   const dt = useRef<DataTable<Product[]>>(null);
 
-  const formatCurrency = (value: number) => {
-    return value.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    });
+  const formatCurrency = (value: number | undefined) => {
+    if (value !== undefined) {
+      return value.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      });
+    } else {
+      // Handle the case where value is undefined, e.g., return a default value or an empty string
+      return "N/A"; // You can customize this based on your requirements
+    }
   };
-
 
   const openNew = () => {
     setProduct(emptyProduct);
@@ -69,7 +77,7 @@ export default function Products() {
     setDeleteProductsDialog(false);
   };
 
-  const saveProduct = () => {
+  const saveProduct = async() => {
     setSubmitted(true);
 
     if (product.name.trim()) {
@@ -78,6 +86,14 @@ export default function Products() {
 
       if (product.id) {
         const index = findIndexById(product.id);
+
+      const response = await fetch(`http://localhost:3001/products/${product.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(_product),
+    });
 
         _products[index] = _product;
         toast.current?.show({
@@ -96,7 +112,7 @@ export default function Products() {
           detail: "Product Created",
           life: 3000,
         });
-      }
+      } 
 
       setProducts(_products);
       setProductDialog(false);
@@ -104,7 +120,7 @@ export default function Products() {
     }
   };
 
-  const editProduct = (product: Product) => {
+  const editProduct = async (product: Product) => {
     setProduct({ ...product });
     setProductDialog(true);
   };
@@ -264,6 +280,10 @@ export default function Products() {
     return formatCurrency(rowData.price);
   };
 
+  const priceForSaleBodyTemplate = (rowData: Product) => {
+    return formatCurrency(rowData.priceforsale);
+  };
+
   const ratingBodyTemplate = (rowData: Product) => {
     return <Rating value={rowData.rating} readOnly cancel={false} />;
   };
@@ -398,8 +418,6 @@ export default function Products() {
           globalFilter={globalFilter}
           header={header}
 
-
-
         >
           <Column selectionMode="multiple" exportable={false} ></Column>
           <Column
@@ -423,6 +441,13 @@ export default function Products() {
             field="price"
             header="Price"
             body={priceBodyTemplate}
+            sortable
+            style={{ minWidth: "8rem" }}
+          ></Column>
+           <Column
+            field="priceforsale"
+            header="PriceForSale"
+            body={priceForSaleBodyTemplate}
             sortable
             style={{ minWidth: "8rem" }}
           ></Column>
@@ -544,8 +569,21 @@ export default function Products() {
               value={product.price}
               onValueChange={(e:InputNumberValueChangeEvent) => onInputNumberChange(e, "price")}
               mode="currency"
-              currency="USD"
-              locale="en-US"
+              currency="BRL"
+              locale="pt-BR"
+            />
+          </div>
+          <div className="field col">
+            <label htmlFor="priceforsale" className="font-bold">
+              Preço de Venda
+            </label>
+            <InputNumber
+              id="priceforsale"
+              value={product.priceforsale}
+              onValueChange={(e:InputNumberValueChangeEvent) => onInputNumberChange(e, "priceforsale")}
+              mode="currency"
+              currency="BRL"
+              locale="pt-BR"
             />
           </div>
           <div className="field col">
