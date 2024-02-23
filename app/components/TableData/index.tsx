@@ -14,6 +14,7 @@ import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Tag } from "primereact/tag";
 import './products.css'
+import { Product } from "@/app/types/product";
 
 interface DataProducts {
     productsData: Product[];

@@ -6,12 +6,12 @@
       "name": "Black Watch",
       "description": "Product Description",
       "image": "black-watch.jpg",
-      "price": 15,
+      "price": 5,
       "category": "Accessories",
       "quantity": 6,
       "inventoryStatus": "INSTOCK",
       "rating": 4,
-      "priceforsale": 30
+      "priceforsale": 35
     },
     {
       "id": "1002",
@@ -19,11 +19,12 @@
       "name": "Blue Band",
       "description": "Product Description",
       "image": "blue-band.jpg",
-      "price": 79,
+      "price": 29,
       "category": "Fitness",
       "quantity": 2,
       "inventoryStatus": "LOWSTOCK",
-      "rating": 3
+      "rating": 3,
+      "priceforsale": 89
     },
     {
       "id": "1003",
@@ -35,7 +36,8 @@
       "category": "Clothing",
       "quantity": 25,
       "inventoryStatus": "INSTOCK",
-      "rating": 5
+      "rating": 5,
+      "priceforsale": 59
     },
     {
       "id": "1004",
