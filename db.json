@@ -19,12 +19,12 @@
       "name": "Blue Band",
       "description": "Product Description",
       "image": "blue-band.jpg",
-      "price": 29,
+      "price": 19,
       "category": "Fitness",
       "quantity": 2,
       "inventoryStatus": "LOWSTOCK",
       "rating": 3,
-      "priceforsale": 89
+      "priceforsale": 29
     },
     {
       "id": "1003",
@@ -37,7 +37,7 @@
       "quantity": 25,
       "inventoryStatus": "INSTOCK",
       "rating": 5,
-      "priceforsale": 59
+      "priceforsale": 49
     },
     {
       "id": "1004",

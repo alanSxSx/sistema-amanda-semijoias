@@ -15,10 +15,15 @@ import { InputText } from "primereact/inputtext";
 import { Tag } from "primereact/tag";
 import './products.css'
 import { Product } from "@/app/types/product";
+import { getProducts } from "@/app/routes/products/route";
+import { baseURL } from "@/app/routes/route";
+
 
 interface DataProducts {
     productsData: Product[];
   }
+
+
 
   export default function Products({ productsData }: DataProducts) {
 
@@ -36,6 +41,7 @@ interface DataProducts {
     inventoryStatus: "INSTOCK",
   };
 
+  
   const [products, setProducts] = useState<Product[]>(productsData);
   const [productDialog, setProductDialog] = useState<boolean>(false);
   const [deleteProductDialog, setDeleteProductDialog] = useState<boolean>(false);
@@ -78,6 +84,11 @@ interface DataProducts {
     setDeleteProductsDialog(false);
   };
 
+ async function fetchData() {
+  const data = await getProducts();
+  setProducts(data);
+  }
+
   const saveProduct = async() => {
     setSubmitted(true);
 
@@ -88,15 +99,15 @@ interface DataProducts {
       if (product.id) {
         const index = findIndexById(product.id);
 
-      const response = await fetch(`http://localhost:3001/products/${product.id}`, {
+      const response = await fetch(`${baseURL}/products/${product.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(_product),
     });
-
         _products[index] = _product;
+
         toast.current?.show({
           severity: "success",
           summary: "Successful",
@@ -115,6 +126,7 @@ interface DataProducts {
         });
       } 
 
+      fetchData();
       setProducts(_products);
       setProductDialog(false);
       setProduct(emptyProduct);
