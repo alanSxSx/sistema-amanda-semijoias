@@ -10,4 +10,5 @@ export interface Product {
     quantity: number;
     inventoryStatus: string;
     rating: number;
+    piececategory: string;
   }

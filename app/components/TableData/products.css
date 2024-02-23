@@ -20,3 +20,28 @@ div .p-dialog-footer button {
     width: 125px;
 }
 
+div .p-dropdown-item {
+    background:white;
+}
+
+div .p-dropdown-item:hover {
+    background:aliceblue;
+}
+
+div .p-dropdown-items {
+    background:white;
+}
+
+div .p-radiobutton-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div .p-radiobutton-box.p-highlight .p-radiobutton-icon {
+    /* width: 75%;
+    height: 75%; */
+}
+
+
+

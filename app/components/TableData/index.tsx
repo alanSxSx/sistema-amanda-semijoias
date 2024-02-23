@@ -17,6 +17,10 @@ import './products.css'
 import { Product } from "@/app/types/product";
 import { getProducts } from "@/app/routes/products/route";
 import { baseURL } from "@/app/routes/route";
+import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
+import { piececategory } from "./pieceCategory";
+
+        
 
 
 interface DataProducts {
@@ -39,6 +43,7 @@ interface DataProducts {
     quantity: 0,
     rating: 0,
     inventoryStatus: "INSTOCK",
+    piececategory: "",
   };
 
   
@@ -50,8 +55,10 @@ interface DataProducts {
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [globalFilter, setGlobalFilter] = useState<string>('');
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const toast = useRef<Toast>(null);
   const dt = useRef<DataTable<Product[]>>(null);
+
 
   const formatCurrency = (value: number | undefined) => {
     if (value !== undefined) {
@@ -208,6 +215,15 @@ interface DataProducts {
     let _product = { ...product };
 
     _product["category"] = e.value;
+    setProduct(_product);
+  };
+
+  const onPieceCategoryChange = (e: DropdownChangeEvent) => {
+    let _product = { ...product };
+
+    _product["piececategory"] = e.target.value;
+
+    setSelectedCategory(e.target.value)
     setProduct(_product);
   };
 
@@ -466,7 +482,13 @@ interface DataProducts {
           ></Column>
           <Column
             field="category"
-            header="Category"
+            header="Material"
+            sortable
+            style={{ minWidth: "10rem" }}
+          ></Column>
+           <Column
+            field="pieceCategory"
+            header="Tipo Da Peça"
             sortable
             style={{ minWidth: "10rem" }}
           ></Column>
@@ -529,7 +551,7 @@ interface DataProducts {
         <div className="field">
           <label className="mb-3 font-bold">Category</label>
           <div className="formgrid grid">
-            <div className="field-radiobutton col-6">
+            <div className="field-radiobutton col-6 text-center">
               <RadioButton
                 inputId="category1"
                 name="category"
@@ -609,6 +631,10 @@ interface DataProducts {
               onValueChange={(e) => onInputNumberChange(e,"quantity")}
             />
           </div>
+        </div>
+        <div className="card flex">
+            <Dropdown value={selectedCategory} onChange={onPieceCategoryChange} options={piececategory} optionLabel="name" 
+                placeholder="Selecione a Categoria" className="w-full md:w-14rem" />
         </div>
       </Dialog>
 
