@@ -20,7 +20,7 @@ import { baseURL } from "@/app/routes/route";
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
 import { piececategory } from "./pieceCategory";
 
-        
+
 
 
 interface DataProducts {
@@ -46,7 +46,7 @@ interface DataProducts {
     piececategory: "",
   };
 
-  
+
   const [products, setProducts] = useState<Product[]>(productsData);
   const [productDialog, setProductDialog] = useState<boolean>(false);
   const [deleteProductDialog, setDeleteProductDialog] = useState<boolean>(false);
@@ -131,7 +131,7 @@ interface DataProducts {
           detail: "Product Created",
           life: 3000,
         });
-      } 
+      }
 
       fetchData();
       setProducts(_products);
@@ -473,7 +473,7 @@ interface DataProducts {
             sortable
             style={{ minWidth: "8rem" }}
           ></Column>
-           <Column
+          <Column
             field="priceforsale"
             header="PriceForSale"
             body={priceForSaleBodyTemplate}
@@ -486,8 +486,8 @@ interface DataProducts {
             sortable
             style={{ minWidth: "10rem" }}
           ></Column>
-           <Column
-            field="pieceCategory"
+          <Column
+            field="piececategory"
             header="Tipo Da Peça"
             sortable
             style={{ minWidth: "10rem" }}
@@ -633,7 +633,7 @@ interface DataProducts {
           </div>
         </div>
         <div className="card flex">
-            <Dropdown value={selectedCategory} onChange={onPieceCategoryChange} options={piececategory} optionLabel="name" 
+            <Dropdown value={selectedCategory} onChange={onPieceCategoryChange} options={piececategory} optionLabel=""
                 placeholder="Selecione a Categoria" className="w-full md:w-14rem" />
         </div>
       </Dialog>

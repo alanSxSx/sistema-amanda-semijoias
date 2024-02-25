@@ -11,7 +11,8 @@
       "quantity": 6,
       "inventoryStatus": "INSTOCK",
       "rating": 4,
-      "priceforsale": 35
+      "priceforsale": 35,
+      "piececategory": "Brinco"
     },
     {
       "id": "1002",
@@ -24,8 +25,8 @@
       "quantity": 2,
       "inventoryStatus": "LOWSTOCK",
       "rating": 3,
-      "priceforsale": 29
-      
+      "priceforsale": 29,
+      "piececategory": "Pulseira"
     },
     {
       "id": "1003",
