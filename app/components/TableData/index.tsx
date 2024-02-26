@@ -20,16 +20,12 @@ import { baseURL } from "@/app/routes/route";
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
 import { piececategory } from "./pieceCategory";
 
-
-
-
 interface DataProducts {
-    productsData: Product[];
-  }
+  productsData: Product[];
+}
 
 
-
-  export default function Products({ productsData }: DataProducts) {
+export default function Products({ productsData }: DataProducts) {
 
   let emptyProduct: Product = {
     id: null,
@@ -42,7 +38,7 @@ interface DataProducts {
     priceforsale: 0,
     quantity: 0,
     rating: 0,
-    inventoryStatus: "INSTOCK",
+    inventoryStatus: "EM ESTOQUE",
     piececategory: "",
   };
 
@@ -91,12 +87,25 @@ interface DataProducts {
     setDeleteProductsDialog(false);
   };
 
- async function fetchData() {
-  const data = await getProducts();
-  setProducts(data);
+  async function fetchData() {
+    const data = await getProducts();
+    setProducts(data);
   }
 
-  const saveProduct = async() => {
+  const determineInventoryStatus = (quantity: number): string => {
+
+    const estoqueminimo = 2;
+
+    if (quantity > 2) {
+      return "EM ESTOQUE";
+    } else if (quantity > 0 && quantity <= estoqueminimo) {
+      return "ESTOQUE BAIXO";
+    } else {
+      return "SEM ESTOQUE";
+    }
+  };
+
+  const saveProduct = async () => {
     setSubmitted(true);
 
     if (product.name.trim()) {
@@ -105,14 +114,15 @@ interface DataProducts {
 
       if (product.id) {
         const index = findIndexById(product.id);
+        _product.inventoryStatus = determineInventoryStatus(_product.quantity);
 
-      const response = await fetch(`${baseURL}/products/${product.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(_product),
-    });
+        const response = await fetch(`${baseURL}/products/${product.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(_product),
+        });
         _products[index] = _product;
 
         toast.current?.show({
@@ -125,6 +135,7 @@ interface DataProducts {
         _product.id = createId();
         _product.image = "product-placeholder.svg";
         _products.push(_product);
+        _product.inventoryStatus = determineInventoryStatus(_product.quantity);
         toast.current?.show({
           severity: "success",
           summary: "Successful",
@@ -240,7 +251,7 @@ interface DataProducts {
     setProduct(_product);
   };
 
-	const onInputTextAreaChange = (
+  const onInputTextAreaChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
     name: string
   ) => {
@@ -267,13 +278,13 @@ interface DataProducts {
     return (
       <div className="flex flex-wrap gap-2">
         <Button
-          label="New"
+          label="Novo"
           icon="pi pi-plus"
           severity="success"
           onClick={openNew}
         />
         <Button
-          label="Delete"
+          label="Excluir"
           icon="pi pi-trash"
           severity="danger"
           onClick={confirmDeleteSelected}
@@ -308,6 +319,11 @@ interface DataProducts {
   const priceBodyTemplate = (rowData: Product) => {
     return formatCurrency(rowData.price);
   };
+
+  const quantityBodyTemplate = (rowData: Product) => {
+    return rowData.quantity
+  };
+
 
   const priceForSaleBodyTemplate = (rowData: Product) => {
     return formatCurrency(rowData.priceforsale);
@@ -349,13 +365,13 @@ interface DataProducts {
 
   const getSeverity = (product: Product) => {
     switch (product.inventoryStatus) {
-      case "INSTOCK":
+      case "EM ESTOQUE":
         return "success";
 
-      case "LOWSTOCK":
+      case "ESTOQUE BAIXO":
         return "warning";
 
-      case "OUTOFSTOCK":
+      case "SEM ESTOQUE":
         return "danger";
 
       default:
@@ -365,7 +381,7 @@ interface DataProducts {
 
   const header = (
     <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-      <h4 className="m-0">Manage Products</h4>
+      <h4 className="m-0">Gerenciamento de Produtos</h4>
       <span className="p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
@@ -381,8 +397,8 @@ interface DataProducts {
   );
   const productDialogFooter = (
     <>
-      <Button label="Cancel" icon="pi pi-times" outlined onClick={hideDialog} />
-      <Button label="Save" icon="pi pi-check" onClick={saveProduct} />
+      <Button label="Cancelar" icon="pi pi-times" outlined onClick={hideDialog} />
+      <Button label="Salvar" icon="pi pi-check" onClick={saveProduct} />
     </>
   );
   const deleteProductDialogFooter = (
@@ -453,7 +469,7 @@ interface DataProducts {
             field="code"
             header="Code"
             sortable
-            style={{ minWidth: "12rem" }}
+            style={{ minWidth: "8rem" }}
           ></Column>
           <Column
             field="name"
@@ -481,6 +497,20 @@ interface DataProducts {
             style={{ minWidth: "8rem" }}
           ></Column>
           <Column
+            field="quantity"
+            header="Quantidade"
+            body={quantityBodyTemplate}
+            sortable
+            style={{ minWidth: "8rem" }}
+          ></Column>
+          <Column 
+            field="inventoryStatus" 
+            header="Status" 
+            body={statusBodyTemplate} 
+            sortable 
+            style={{ minWidth: '10rem' }}>
+          </Column>
+          <Column
             field="category"
             header="Material"
             sortable
@@ -505,7 +535,7 @@ interface DataProducts {
         visible={productDialog}
         style={{ width: "32rem" }}
         breakpoints={{ "960px": "75vw", "641px": "90vw" }}
-        header="Product Details"
+        header="Sobre o Produto"
         modal
         className="p-fluid"
         footer={productDialogFooter}
@@ -520,12 +550,12 @@ interface DataProducts {
         )}
         <div className="field">
           <label htmlFor="name" className="font-bold">
-            Name
+            Nome
           </label>
           <InputText
             id="name"
             value={product.name}
-            onChange={(e:ChangeEvent<HTMLInputElement>) => onInputChange(e, "name")}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onInputChange(e, "name")}
             required
             autoFocus
             className={classNames({ "p-invalid": submitted && !product.name })}
@@ -536,12 +566,12 @@ interface DataProducts {
         </div>
         <div className="field">
           <label htmlFor="description" className="font-bold">
-            Description
+            Descrição
           </label>
           <InputTextarea
             id="description"
             value={product.description}
-            onChange={(e:ChangeEvent<HTMLTextAreaElement>) => onInputTextAreaChange(e, "description")}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => onInputTextAreaChange(e, "description")}
             required
             rows={3}
             cols={20}
@@ -549,47 +579,47 @@ interface DataProducts {
         </div>
 
         <div className="field">
-          <label className="mb-3 font-bold">Category</label>
+          <label className="mb-3 font-bold">Material</label>
           <div className="formgrid grid">
             <div className="field-radiobutton col-6 text-center">
               <RadioButton
                 inputId="category1"
                 name="category"
-                value="Accessories"
+                value="Prata"
                 onChange={onCategoryChange}
-                checked={product.category === "Accessories"}
+                checked={product.category === "Prata"}
               />
-              <label htmlFor="category1">Accessories</label>
+              <label htmlFor="category1">Prata</label>
             </div>
             <div className="field-radiobutton col-6">
               <RadioButton
                 inputId="category2"
                 name="category"
-                value="Clothing"
+                value="Moeda"
                 onChange={onCategoryChange}
-                checked={product.category === "Clothing"}
+                checked={product.category === "Moeda"}
               />
-              <label htmlFor="category2">Clothing</label>
+              <label htmlFor="category2">Moeda</label>
             </div>
             <div className="field-radiobutton col-6">
               <RadioButton
                 inputId="category3"
                 name="category"
-                value="Electronics"
+                value="SemiJoia"
                 onChange={onCategoryChange}
-                checked={product.category === "Electronics"}
+                checked={product.category === "Semijoia"}
               />
-              <label htmlFor="category3">Electronics</label>
+              <label htmlFor="category3">SemiJoia</label>
             </div>
             <div className="field-radiobutton col-6">
               <RadioButton
                 inputId="category4"
                 name="category"
-                value="Fitness"
+                value="Ouro"
                 onChange={onCategoryChange}
-                checked={product.category === "Fitness"}
+                checked={product.category === "Ouro"}
               />
-              <label htmlFor="category4">Fitness</label>
+              <label htmlFor="category4">Ouro</label>
             </div>
           </div>
         </div>
@@ -597,12 +627,12 @@ interface DataProducts {
         <div className="formgrid grid">
           <div className="field col">
             <label htmlFor="price" className="font-bold">
-              Price
+              Preço de Custo
             </label>
             <InputNumber
               id="price"
               value={product.price}
-              onValueChange={(e:InputNumberValueChangeEvent) => onInputNumberChange(e, "price")}
+              onValueChange={(e: InputNumberValueChangeEvent) => onInputNumberChange(e, "price")}
               mode="currency"
               currency="BRL"
               locale="pt-BR"
@@ -615,7 +645,7 @@ interface DataProducts {
             <InputNumber
               id="priceforsale"
               value={product.priceforsale}
-              onValueChange={(e:InputNumberValueChangeEvent) => onInputNumberChange(e, "priceforsale")}
+              onValueChange={(e: InputNumberValueChangeEvent) => onInputNumberChange(e, "priceforsale")}
               mode="currency"
               currency="BRL"
               locale="pt-BR"
@@ -623,18 +653,18 @@ interface DataProducts {
           </div>
           <div className="field col">
             <label htmlFor="quantity" className="font-bold">
-              Quantity
+              Quantidade
             </label>
             <InputNumber
               id="quantity"
               value={product.quantity}
-              onValueChange={(e) => onInputNumberChange(e,"quantity")}
+              onValueChange={(e) => onInputNumberChange(e, "quantity")}
             />
           </div>
         </div>
         <div className="card flex">
-            <Dropdown value={selectedCategory} onChange={onPieceCategoryChange} options={piececategory} optionLabel=""
-                placeholder="Selecione a Categoria" className="w-full md:w-14rem" />
+          <Dropdown value={selectedCategory} onChange={onPieceCategoryChange} options={piececategory} optionLabel=""
+            placeholder="Selecione a Categoria" className="w-full md:w-14rem" />
         </div>
       </Dialog>
 
@@ -642,7 +672,7 @@ interface DataProducts {
         visible={deleteProductDialog}
         style={{ width: "32rem" }}
         breakpoints={{ "960px": "75vw", "641px": "90vw" }}
-        header="Confirm"
+        header="Confirmar"
         modal
         footer={deleteProductDialogFooter}
         onHide={hideDeleteProductDialog}
@@ -654,7 +684,7 @@ interface DataProducts {
           />
           {product && (
             <span>
-              Are you sure you want to delete <b>{product.name}</b>?
+              Tem certeza que deseja excluir <b>{product.name}</b>?
             </span>
           )}
         </div>
@@ -675,7 +705,7 @@ interface DataProducts {
             style={{ fontSize: "2rem" }}
           />
           {product && (
-            <span>Are you sure you want to delete the selected products?</span>
+            <span>Tem certeza que deseja excluir os produtos selecionados ?</span>
           )}
         </div>
       </Dialog>

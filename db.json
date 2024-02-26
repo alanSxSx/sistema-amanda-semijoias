@@ -9,7 +9,7 @@
       "price": 5,
       "category": "Accessories",
       "quantity": 6,
-      "inventoryStatus": "INSTOCK",
+      "inventoryStatus": "EM ESTOQUE",
       "rating": 4,
       "priceforsale": 35,
       "piececategory": "Brinco"
@@ -22,8 +22,8 @@
       "image": "blue-band.jpg",
       "price": 19,
       "category": "Fitness",
-      "quantity": 2,
-      "inventoryStatus": "LOWSTOCK",
+      "quantity": 7,
+      "inventoryStatus": "EM ESTOQUE",
       "rating": 3,
       "priceforsale": 29,
       "piececategory": "Pulseira"
@@ -35,11 +35,12 @@
       "description": "Product Description",
       "image": "blue-t-shirt.jpg",
       "price": 29,
-      "category": "Clothing",
+      "category": "Moeda",
       "quantity": 25,
-      "inventoryStatus": "INSTOCK",
+      "inventoryStatus": "EM ESTOQUE",
       "rating": 5,
-      "priceforsale": 49
+      "priceforsale": 49,
+      "piececategory": "Aliança"
     },
     {
       "id": "1004",
@@ -62,8 +63,9 @@
       "price": 120,
       "category": "Accessories",
       "quantity": 0,
-      "inventoryStatus": "OUTOFSTOCK",
-      "rating": 4
+      "inventoryStatus": "SEM ESTOQUE",
+      "rating": 4,
+      "priceforsale": 0
     },
     {
       "id": "1006",
@@ -98,8 +100,9 @@
       "price": 99,
       "category": "Electronics",
       "quantity": 2,
-      "inventoryStatus": "LOWSTOCK",
-      "rating": 4
+      "inventoryStatus": "ESTOQUE BAIXO",
+      "rating": 4,
+      "priceforsale": 0
     },
     {
       "id": "1009",
@@ -122,8 +125,9 @@
       "price": 24,
       "category": "Accessories",
       "quantity": 0,
-      "inventoryStatus": "OUTOFSTOCK",
-      "rating": 4
+      "inventoryStatus": "SEM ESTOQUE",
+      "rating": 4,
+      "priceforsale": 0
     },
     {
       "id": "1011",
