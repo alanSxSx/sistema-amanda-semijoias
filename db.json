@@ -51,8 +51,9 @@
       "price": 15,
       "category": "Accessories",
       "quantity": 73,
-      "inventoryStatus": "INSTOCK",
-      "rating": 4
+      "inventoryStatus": "EM ESTOQUE",
+      "rating": 4,
+      "priceforsale": 0
     },
     {
       "id": "1005",
@@ -76,8 +77,9 @@
       "price": 32,
       "category": "Accessories",
       "quantity": 5,
-      "inventoryStatus": "LOWSTOCK",
-      "rating": 3
+      "inventoryStatus": "EM ESTOQUE",
+      "rating": 3,
+      "priceforsale": 0
     },
     {
       "id": "1007",
@@ -88,8 +90,9 @@
       "price": 34,
       "category": "Accessories",
       "quantity": 23,
-      "inventoryStatus": "INSTOCK",
-      "rating": 5
+      "inventoryStatus": "EM ESTOQUE",
+      "rating": 5,
+      "priceforsale": 0
     },
     {
       "id": "1008",
@@ -138,8 +141,9 @@
       "price": 89,
       "category": "Electronics",
       "quantity": 23,
-      "inventoryStatus": "INSTOCK",
-      "rating": 4
+      "inventoryStatus": "EM ESTOQUE",
+      "rating": 4,
+      "priceforsale": 0
     },
     {
       "id": "1012",
@@ -150,8 +154,9 @@
       "price": 49,
       "category": "Clothing",
       "quantity": 74,
-      "inventoryStatus": "INSTOCK",
-      "rating": 5
+      "inventoryStatus": "EM ESTOQUE",
+      "rating": 5,
+      "priceforsale": 0
     },
     {
       "id": "1013",
@@ -162,8 +167,9 @@
       "price": 48,
       "category": "Clothing",
       "quantity": 0,
-      "inventoryStatus": "OUTOFSTOCK",
-      "rating": 3
+      "inventoryStatus": "SEM ESTOQUE",
+      "rating": 3,
+      "priceforsale": 0
     },
     {
       "id": "1014",
@@ -174,8 +180,9 @@
       "price": 175,
       "category": "Electronics",
       "quantity": 8,
-      "inventoryStatus": "LOWSTOCK",
-      "rating": 5
+      "inventoryStatus": "EM ESTOQUE",
+      "rating": 5,
+      "priceforsale": 0
     },
     {
       "id": "1015",

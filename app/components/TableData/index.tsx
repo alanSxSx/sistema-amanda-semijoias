@@ -467,31 +467,31 @@ export default function Products({ productsData }: DataProducts) {
           <Column selectionMode="multiple" exportable={false} ></Column>
           <Column
             field="code"
-            header="Code"
+            header="Codigo"
             sortable
             style={{ minWidth: "8rem" }}
           ></Column>
           <Column
             field="name"
-            header="Name"
+            header="Nome"
             sortable
             style={{ minWidth: "16rem" }}
           ></Column>
           <Column
             field="image"
-            header="Image"
+            header="Imagem"
             body={imageBodyTemplate}
           ></Column>
           <Column
             field="price"
-            header="Price"
+            header="Preço de Custo"
             body={priceBodyTemplate}
             sortable
             style={{ minWidth: "8rem" }}
           ></Column>
           <Column
             field="priceforsale"
-            header="PriceForSale"
+            header="Preço de Venda"
             body={priceForSaleBodyTemplate}
             sortable
             style={{ minWidth: "8rem" }}
