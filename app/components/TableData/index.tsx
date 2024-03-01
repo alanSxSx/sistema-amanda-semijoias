@@ -136,10 +136,15 @@ export default function Products({ productsData }: DataProducts) {
         _product.image = "product-placeholder.svg";
         _products.push(_product);
         _product.inventoryStatus = determineInventoryStatus(_product.quantity);
+
+        
+
+
+
         toast.current?.show({
           severity: "success",
           summary: "Successful",
-          detail: "Product Created",
+          detail: "Product Criado com Sucesso",
           life: 3000,
         });
       }
@@ -459,7 +464,7 @@ export default function Products({ productsData }: DataProducts) {
           rows={10}
           rowsPerPageOptions={[5, 10, 25]}
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+          currentPageReportTemplate="Mostrando {first} para {last} de {totalRecords} produtos"
           globalFilter={globalFilter}
           header={header}
 

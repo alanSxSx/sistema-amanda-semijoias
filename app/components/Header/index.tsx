@@ -71,7 +71,7 @@ export function Header() {
 
   return (
     <div className="card">
-      <Menubar model={items} className="bg-red-900 rounded-none text-white p-3" aria-label="true" />
+      <Menubar model={items} className="bg-red-900 flex justify-content-center  rounded-none text-white p-3" aria-label="true" />
     </div>
   );
 }
