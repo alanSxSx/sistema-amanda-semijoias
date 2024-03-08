@@ -20,7 +20,7 @@ export function Header() {
       icon: "pi pi-user",
       items: [
         {
-          label: "Components",
+          label: "Cadastro",
           icon: "pi pi-bolt",
         },
         {
@@ -31,20 +31,7 @@ export function Header() {
           label: "UI Kit",
           icon: "pi pi-pencil",
         },
-        {
-          label: "Revendedor",
-          icon: "pi pi-palette",
-          items: [
-            {
-              label: "Apollo",
-              icon: "pi pi-palette",
-            },
-            {
-              label: "Ultima",
-              icon: "pi pi-palette",
-            },
-          ],
-        },
+      
       ],
     },
     {
