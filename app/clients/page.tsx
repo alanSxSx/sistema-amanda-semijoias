@@ -8,7 +8,7 @@ import { Rating } from 'primereact/rating';
 import { Toolbar } from 'primereact/toolbar';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { RadioButton, RadioButtonChangeEvent } from 'primereact/radiobutton';
-import { InputNumber, InputNumberChangeEvent } from 'primereact/inputnumber';
+import { InputNumber, InputNumberChangeEvent,InputNumberProps } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
@@ -176,8 +176,18 @@ interface Product {
   
 		  setProduct(_product);
 	  };
+
+	  const onInputTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>, name: string) => {
+		const val = (e.target && e.target.value) || '';
+		let _product = { ...product };
+
+		// @ts-ignore
+		_product[`${name}`] = val;
+
+		setProduct(_product);
+	};
   
-	  const onInputNumberChange = (e: InputNumberChangeEvent, name: string) => {
+	  const onInputNumberChange = (e: InputNumberProps, name: string) => {
 		  const val = e.value || 0;
 		  let _product = { ...product };
   
@@ -283,7 +293,7 @@ interface Product {
 						  }}
 						  dataKey="id"  paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
 						  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-						  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header}>
+						  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header} selectionMode="multiple">
 					  <Column selectionMode="multiple" exportable={false}></Column>
 					  <Column field="code" header="Code" sortable style={{ minWidth: '12rem' }}></Column>
 					  <Column field="name" header="Name" sortable style={{ minWidth: '16rem' }}></Column>
@@ -309,7 +319,7 @@ interface Product {
 					  <label htmlFor="description" className="font-bold">
 						  Description
 					  </label>
-					  <InputTextarea id="description" value={product.description} onChange={(e) => onInputChange(e, 'description')} required rows={3} cols={20} />
+					  <InputTextarea id="description" value={product.description} onChange={(e) => onInputTextAreaChange(e, 'description')} required rows={3} cols={20} />
 				  </div>
   
 				  <div className="field">
