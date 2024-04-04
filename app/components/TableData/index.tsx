@@ -19,6 +19,7 @@ import { getProducts } from "@/app/routes/products/route";
 import { baseURL } from "@/app/routes/route";
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
 import { piececategory } from "./pieceCategory";
+import { FileUpload, FileUploadProps, FileUploadSelectEvent, FileUploadUploadEvent } from "primereact/fileupload";
 
 interface DataProducts {
   productsData: Product[];
@@ -52,8 +53,10 @@ export default function Products({ productsData }: DataProducts) {
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [globalFilter, setGlobalFilter] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [image, setImage] = useState<File | string>('');
   const toast = useRef<Toast>(null);
   const dt = useRef<DataTable<Product[]>>(null);
+  const fileUploadRef = useRef<FileUpload>(null);
 
 
   const formatCurrency = (value: number | undefined) => {
@@ -105,56 +108,72 @@ export default function Products({ productsData }: DataProducts) {
     }
   };
 
-  const saveProduct = async () => {
+  // const saveProduct = async () => {
+  //   setSubmitted(true);
+
+  //   if (product.name.trim()) {
+  //     let _products = [...products];
+  //     let _product = { ...product };
+
+  //     if (product.id) {
+  //       const index = findIndexById(product.id);
+  //       _product.inventoryStatus = determineInventoryStatus(_product.quantity);
+
+  //       const response = await fetch(`${baseURL}/products/${product.id}`, {
+  //         method: 'PUT',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify(_product),
+  //       });
+  //       _products[index] = _product;
+
+  //       toast.current?.show({
+  //         severity: "success",
+  //         summary: "Successful",
+  //         detail: "Product Updated",
+  //         life: 3000,
+  //       });
+  //     } else {
+  //       _product.id = createId();
+  //       _product.image = "product-placeholder.svg";
+  //       _products.push(_product);
+  //       _product.inventoryStatus = determineInventoryStatus(_product.quantity);
+
+  //       toast.current?.show({
+  //         severity: "success",
+  //         summary: "Successful",
+  //         detail: "Product Criado com Sucesso",
+  //         life: 3000,
+  //       });
+  //     }
+
+  //     fetchData();
+  //     setProducts(_products);
+  //     setProductDialog(false);
+  //     setProduct(emptyProduct);
+  //   }
+  // };
+
+
+
+    const saveProduct = async () => {
     setSubmitted(true);
 
     if (product.name.trim()) {
       let _products = [...products];
       let _product = { ...product };
 
-      if (product.id) {
-        const index = findIndexById(product.id);
-        _product.inventoryStatus = determineInventoryStatus(_product.quantity);
-
-        const response = await fetch(`${baseURL}/products/${product.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(_product),
-        });
-        _products[index] = _product;
-
-        toast.current?.show({
-          severity: "success",
-          summary: "Successful",
-          detail: "Product Updated",
-          life: 3000,
-        });
-      } else {
-        _product.id = createId();
-        _product.image = "product-placeholder.svg";
-        _products.push(_product);
-        _product.inventoryStatus = determineInventoryStatus(_product.quantity);
-
-        
-
-
-
-        toast.current?.show({
-          severity: "success",
-          summary: "Successful",
-          detail: "Product Criado com Sucesso",
-          life: 3000,
-        });
-      }
-
       fetchData();
+      uploadImage();
       setProducts(_products);
       setProductDialog(false);
       setProduct(emptyProduct);
     }
+
   };
+
+  
 
   const editProduct = async (product: Product) => {
     setProduct({ ...product });
@@ -439,6 +458,31 @@ export default function Products({ productsData }: DataProducts) {
     </React.Fragment>
   );
 
+  const uploadImage = async () => {
+    // Criação de um objeto FormData para enviar o arquivo
+    const formData = new FormData();
+    formData.append('image',image)
+  
+    try {
+      const response = await fetch('http://localhost:8080/upload-image', {
+        method: 'POST',
+        body: formData,  
+      });
+  
+      if (response.ok) {
+        // Sucesso ao enviar o arquivo
+        console.log('Arquivo enviado com sucesso!');
+      } else {
+        // Tratar erro na resposta
+        console.error('Erro ao enviar arquivo:', response.status, response.statusText);
+      }
+    } catch (error) {
+      // Tratar erro de rede ou outros erros
+      console.error('Erro de rede:', error);
+    }
+  };
+
+
   return (
     <div>
       <Toast ref={toast} />
@@ -508,11 +552,11 @@ export default function Products({ productsData }: DataProducts) {
             sortable
             style={{ minWidth: "8rem" }}
           ></Column>
-          <Column 
-            field="inventoryStatus" 
-            header="Status" 
-            body={statusBodyTemplate} 
-            sortable 
+          <Column
+            field="inventoryStatus"
+            header="Status"
+            body={statusBodyTemplate}
+            sortable
             style={{ minWidth: '10rem' }}>
           </Column>
           <Column
@@ -553,6 +597,11 @@ export default function Products({ productsData }: DataProducts) {
             className="product-image block m-auto pb-3"
           />
         )}
+        <div className="card flex justify-content-center pt-3">
+
+        <input type="file" name="image" onChange={e => setImage(e.target?.files?.[0] ?? '')}/>
+
+        </div>
         <div className="field">
           <label htmlFor="name" className="font-bold">
             Nome
