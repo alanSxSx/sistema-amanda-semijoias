@@ -45,3 +45,9 @@ div .p-radiobutton-box.p-highlight .p-radiobutton-icon {
 
 
 
+input[type="file"] {
+  display: none;
+}
+
+
+

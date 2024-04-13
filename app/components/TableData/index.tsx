@@ -54,6 +54,7 @@ export default function Products({ productsData }: DataProducts) {
   const [globalFilter, setGlobalFilter] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [image, setImage] = useState<File | string>('');
+	const [fileName,setFileName] = useState<string>('');
   const toast = useRef<Toast>(null);
   const dt = useRef<DataTable<Product[]>>(null);
   const fileUploadRef = useRef<FileUpload>(null);
@@ -173,7 +174,7 @@ export default function Products({ productsData }: DataProducts) {
 
   };
 
-  
+
 
   const editProduct = async (product: Product) => {
     setProduct({ ...product });
@@ -462,13 +463,13 @@ export default function Products({ productsData }: DataProducts) {
     // Criação de um objeto FormData para enviar o arquivo
     const formData = new FormData();
     formData.append('image',image)
-  
+
     try {
       const response = await fetch('http://localhost:8080/upload-image', {
         method: 'POST',
-        body: formData,  
+        body: formData,
       });
-  
+
       if (response.ok) {
         // Sucesso ao enviar o arquivo
         console.log('Arquivo enviado com sucesso!');
@@ -599,7 +600,12 @@ export default function Products({ productsData }: DataProducts) {
         )}
         <div className="card flex justify-content-center pt-3">
 
-        <input type="file" name="image" onChange={e => setImage(e.target?.files?.[0] ?? '')}/>
+
+				<div className="form-group">
+				<label htmlFor="image" className="border p-3 font-bold bg-[#6366f1] text-white rounded-md cursor-pointer transition duration-0.2 hover:bg-[#4f46e5]">Clique aqui para escolher a Imagem</label>
+				<div className="pt-3 text-black flex items-center justify-center">{image instanceof File && image.name}</div>
+        <input type="file" id="image" name="image" onChange={e => setImage(e.target?.files?.[0] ?? '')}/>
+				</div>
 
         </div>
         <div className="field">
