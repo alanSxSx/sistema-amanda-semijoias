@@ -81,6 +81,7 @@ export default function Products({ productsData }: DataProducts) {
   const hideDialog = () => {
     setSubmitted(false);
     setProductDialog(false);
+		setImage('')
   };
 
   const hideDeleteProductDialog = () => {
