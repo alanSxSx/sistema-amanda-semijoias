@@ -142,13 +142,31 @@ export default function Products({ productsData }: DataProducts) {
   //       _products.push(_product);
   //       _product.inventoryStatus = determineInventoryStatus(_product.quantity);
 
-  //       toast.current?.show({
-  //         severity: "success",
-  //         summary: "Successful",
-  //         detail: "Product Criado com Sucesso",
-  //         life: 3000,
-  //       });
+  //       const response = await fetch(`${baseURL}/products`, {
+	// 				method: 'POST',
+	// 				headers: {
+	// 					'Content-Type': 'application/json',
+	// 				},
+	// 				body: JSON.stringify(_product),
+	// 			});
+
+	// 			if (response.ok) {
+	// 				toast.current?.show({
+	// 					severity: "success",
+	// 					summary: "Successful",
+	// 					detail: "Product Created Successfully",
+	// 					life: 3000,
+	// 				});
+	// 			} else {
+	// 				toast.current?.show({
+	// 					severity: "error",
+	// 					summary: "Error",
+	// 					detail: "Failed to create product",
+	// 					life: 3000,
+	// 				});
+	// 			}
   //     }
+
 
   //     fetchData();
   //     setProducts(_products);
@@ -157,23 +175,100 @@ export default function Products({ productsData }: DataProducts) {
   //   }
   // };
 
+	const saveProduct = async () => {
+		setSubmitted(true);
+
+		if (product.name.trim()) {
+			let _products = [...products];
+			let _product = { ...product };
+
+			if (product.id) {
+				const index = findIndexById(product.id);
+				_product.inventoryStatus = determineInventoryStatus(_product.quantity);
+
+				const response = await fetch(`${baseURL}/products/${product.id}`, {
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(_product),
+				});
+				_products[index] = _product;
+
+				toast.current?.show({
+					severity: "success",
+					summary: "Successful",
+					detail: "Product Updated",
+					life: 3000,
+				});
+			} else {
+				// Upload da imagem
+				const fileName = await uploadImage();
+
+				// Se o envio da imagem foi bem-sucedido e retornou um nome de arquivo
+				if (fileName) {
+					_product.id = createId();
+					_product.image = fileName; // Inserir o nome do arquivo no produto
+					_products.push(_product);
+					_product.inventoryStatus = determineInventoryStatus(_product.quantity);
+
+					const response = await fetch(`${baseURL}/products`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(_product),
+					});
+
+					if (response.ok) {
+						toast.current?.show({
+							severity: "success",
+							summary: "Successful",
+							detail: "Product Created Successfully",
+							life: 3000,
+						});
+					} else {
+						toast.current?.show({
+							severity: "error",
+							summary: "Error",
+							detail: "Failed to create product",
+							life: 3000,
+						});
+					}
+				} else {
+					toast.current?.show({
+						severity: "error",
+						summary: "Error",
+						detail: "Failed to upload image",
+						life: 3000,
+					});
+				}
+			}
+
+			fetchData();
+			setProducts(_products);
+			setProductDialog(false);
+			setProduct(emptyProduct);
+		}
+	};
 
 
-    const saveProduct = async () => {
-    setSubmitted(true);
 
-    if (product.name.trim()) {
-      let _products = [...products];
-      let _product = { ...product };
+  //   const saveProduct = async () => {
+  //   setSubmitted(true);
 
-      fetchData();
-      uploadImage();
-      setProducts(_products);
-      setProductDialog(false);
-      setProduct(emptyProduct);
-    }
+  //   if (product.name.trim()) {
+  //     let _products = [...products];
+  //     let _product = { ...product };
 
-  };
+  //     fetchData();
+  //     uploadImage();
+  //     setProducts(_products);
+  //     setProductDialog(false);
+  //     setProduct(emptyProduct);
+  //   }
+
+  // };
 
 
 
@@ -473,7 +568,10 @@ export default function Products({ productsData }: DataProducts) {
 
       if (response.ok) {
         // Sucesso ao enviar o arquivo
+				const data = await response.json();
         console.log('Arquivo enviado com sucesso!');
+				return data.name;
+				// nome do arquivo do backend console.log(data.name)
       } else {
         // Tratar erro na resposta
         console.error('Erro ao enviar arquivo:', response.status, response.statusText);

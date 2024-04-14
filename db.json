@@ -363,6 +363,34 @@
       "quantity": 25,
       "inventoryStatus": "INSTOCK",
       "rating": 8
+    },
+    {
+      "id": "8sOBx",
+      "code": "",
+      "name": "teste",
+      "image": "product-placeholder.svg",
+      "description": "teste",
+      "category": "Prata",
+      "price": 100,
+      "priceforsale": 20,
+      "quantity": 5,
+      "rating": 0,
+      "inventoryStatus": "EM ESTOQUE",
+      "piececategory": "Anel"
+    },
+    {
+      "id": "tuJcx",
+      "code": "",
+      "name": "teste",
+      "image": "1713115959340_ALAN.png",
+      "description": "teste",
+      "category": "Prata",
+      "price": 10,
+      "priceforsale": 20,
+      "quantity": 5,
+      "rating": 0,
+      "inventoryStatus": "EM ESTOQUE",
+      "piececategory": "Anel"
     }
   ]
 }
